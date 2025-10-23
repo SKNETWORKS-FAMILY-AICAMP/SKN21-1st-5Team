@@ -35,11 +35,11 @@ class WebConnectManager:
             team = r.select_one("div.z-10.min-h-\[112px\].text-static-static-1 > div.pt-px-4.pb-px-16").text
             country = r.select_one("svg").text
             img = r.select("img")
-            print(first, last)
-            print(team)
-            print(country)
-            print(img)
-            drivers.append((first, last, team, country))
+            # print(first, last)
+            # print(team)
+            # print(country)
+            # print(img)
+            drivers.append([first, last, team, country])
 
         return drivers
     
@@ -67,4 +67,25 @@ class WebConnectManager:
 
 
 
-    
+
+    def get_drivers_dict(self):
+        soup = self.connect("/drivers")
+        result = soup.select("#maincontent > div > div > div > div > div.grid.grid-cols-1.\@\[680px\]\/page\:grid-cols-2.\@\[1660px\]\/page\:grid-cols-4.gap-px-16.lg\:gap-px-24 > div > a > div")
+        print(result[0].prettify()[0:100])
+
+        drivers = []
+
+        for r in result:
+            last = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-regular__MOZq8.group-hover\/driver-card\:underline")[0].text
+            first = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-bold__m1yaJ.group-hover\/driver-card\:underline")[0].text
+            team = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > div.pt-px-4.pb-px-16")[0].text
+            country = r.select("svg")[0].text
+            name = f'{first} {last}'.strip()
+
+            driver_dict = {
+                'name': name,
+                'team': team,
+                'country': country
+            }    
+            drivers.append(driver_dict)
+        return drivers

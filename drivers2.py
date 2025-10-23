@@ -4,6 +4,7 @@
 '''
 import pymysql
 from data.connect import WebConnectManager
+from datetime import datetime
 
 # drivers_db.py
 def insert_team():
@@ -19,7 +20,7 @@ def insert_team():
                 with conn.cursor() as cursor:
                     name = v['name']
                     team = v['team']
-                    country = v['country']
+                    country = v['country'].replace('Flag of ', '')
                     create_date = datetime.now()
 
                     print(f'name : {name},  {team}, {country}, {create_date}')
@@ -58,3 +59,5 @@ def select_driver():
     pass # 전체조회
 def select_driver_by_id(driver_id):
     pass # ID로 조회
+
+insert_team()
