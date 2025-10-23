@@ -23,18 +23,19 @@ def insert_driver():
         wm = WebConnectManager()
         # print(wm.get_drivers2())
         # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
-        insert_sql = 'insert into drivers (name, team_id, country_id, create_date) values (%s, %s, %s, %s)'
+        insert_sql = 'insert into drivers (name, team_id, country_id, image_url, create_date) values (%s, %s, %s, %s, %s)'
         with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
             for v in wm.get_drivers():
                 with conn.cursor() as cursor:
                     name = v['name']
                     team = v['team']
                     country = v['country'].replace('Flag of ', '')
+                    image_url = v['image_url']
                     create_date = datetime.now()
 
-                    print(f'name : {name},  {team}, {country}, {create_date}')
+                    print(f'name : {name},  {team}, {country}, {image_url}, {create_date}')
 
-                    result = cursor.execute(insert_sql, [name, team, country, create_date])
+                    result = cursor.execute(insert_sql, [name, team, country, image_url, create_date])
                     conn.commit()
                     print("처리 행수:", result)
                     # return result
