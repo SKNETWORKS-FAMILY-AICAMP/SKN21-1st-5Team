@@ -5,115 +5,95 @@
 import pymysql
 from datetime import datetime
 from data.connect import WebConnectManager
+from sql.db_connect import DBManager
 
-db_host = "127.0.0.1"
-db_port = 3306
-# user_name = "lucy"
-user_name = "playdata"
-db_password = "1111"
-db_name = "1st_pjt"
+class DriversDBManager(DBManager):
+    def __init__(self):
+        self.wm = WebConnectManager()
 
-def select_connect(sql):
-    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
-        with conn.cursor() as cursor:
-            result = cursor.execute(sql)
-            
-            return cursor
-
-
-# drivers_db.py
-def insert_team():
-    pass
-
-def insert_country(name, email, tall, birthday):
-    pass
-
-def insert_driver():
-
-    delete_driver_all()
-    
-    try:
-        conn = None
-        cursor = None
-        wm = WebConnectManager()
-        # print(wm.get_drivers2())
-        # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
-        insert_sql = 'insert into drivers (name, team_id, country_id, image_url, create_date) values (%s, %s, %s, %s, %s)'
-        with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
-            for v in wm.get_drivers():
-                with conn.cursor() as cursor:
-                    name = v['name']
-                    team = v['team']
-                    country = v['country'].replace('Flag of ', '')
-                    image_url = v['image_url']
-                    create_date = datetime.now()
-
-                    print(f'name : {name},  {team}, {country}, {image_url}, {create_date}')
-
-                    result = cursor.execute(insert_sql, [name, team, country, image_url, create_date])
-                    conn.commit()
-                    print("처리 행수:", result)
-                    # return result
-    finally:
+    # drivers_db.py
+    def insert_team(self):
         pass
 
-def update_team(team_id):
-    pass
-def update_country(country_id):
-    pass
-def update_driver(driver_id):
-    pass
-
-def delee_team(team_id):
-    pass
-def delete_country(country_id):
-    pass
-
-def delete_driver_all():
-    try:
-        conn = None
-        cursor = None
-        wm = WebConnectManager()
-        delete_sql = 'delete from drivers'
-        with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
-            cursor = conn.cursor()
-
-            for v in wm.get_drivers():
-                with conn.cursor() as cursor:
-                    result = cursor.execute(delete_sql)
-                    conn.commit()
-                    print("처리 행수:", result)
-    finally:
+    def insert_country(self, name, email, tall, birthday):
         pass
 
+    def insert_driver(self):
 
-def select_team():
-    print('have a good')
-    WebConnectManager().get_drivers()
-    pass # 전체조회
-def select_country():
-    pass # 전체조회
+        self.delete_driver_all()
+        
+        try:
+            conn = None
+            cursor = None
+            # print(wm.get_drivers2())
+            # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
+            insert_sql = 'insert into drivers (name, team_id, country_id, image_url, create_date) values (%s, %s, %s, %s, %s)'
+            with pymysql.connect(host=self.db_host, port=self.db_port, user=self.user_name, password=self.db_password, db=self.db_name) as conn:
+                for v in self.wm.get_drivers():
+                    with conn.cursor() as cursor:
+                        name = v['name']
+                        team = v['team']
+                        country = v['country'].replace('Flag of ', '')
+                        image_url = v['image_url']
+                        create_date = datetime.now()
 
-def select_teams():
-    return select_connect('select distinct team_id from drivers').fetchall()
+                        print(f'name : {name},  {team}, {country}, {image_url}, {create_date}')
 
-def select_drivers():
-    # 드라이버 리스트 전체 조회
-    sql = 'select * from drivers'
-    return select_connect('select * from drivers group').fetchall()
+                        result = cursor.execute(insert_sql, [name, team, country, image_url, create_date])
+                        conn.commit()
+                        print("처리 행수:", result)
+                        # return result
+        finally:
+            pass
 
-def select_drivers_by_team(team_id: str):
-    # 드라이버 리스트 팀 분류 - 전체 조회
-    print(f"select * from drivers where team_id = '{team_id}'")
-    return select_connect(f"select * from drivers where team_id = '{team_id}'").fetchall()
+    def update_team(self, team_id):
+        pass
+    def update_country(self, ountry_id):
+        pass
+    def update_driver(self, driver_id):
+        pass
 
-def select_driver_by_keyword(keyword):
-    sql = f"select * from drivers where name LIKE '%{keyword}%'"
+    def delee_team(self, team_id):
+        pass
+    def delete_country(self, country_id):
+        pass
 
-    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
-        with conn.cursor() as cursor:
-                result = cursor.execute(sql)
-                print("처리 행수:", result)
+    def delete_driver_all(self):
+        try:
+            conn = None
+            cursor = None
+            delete_sql = 'delete from drivers'
+            with pymysql.connect(host=self.db_host, port=self.db_port, user=self.user_name, password=self.db_password, db=self.db_name) as conn:
+                cursor = conn.cursor()
 
-def select_driver_by_id(driver_id):
-    pass # ID로 조회
+                for v in self.wm.get_drivers():
+                    with conn.cursor() as cursor:
+                        result = cursor.execute(delete_sql)
+                        conn.commit()
+                        print("처리 행수:", result)
+        finally:
+            pass
+
+    def select_country(self):
+        pass # 전체조회
+
+    def select_teams(self):
+        return self.select_connect('select distinct team_id from drivers').fetchall()
+
+    def select_drivers(self):
+        # 드라이버 리스트 전체 조회
+        return self.select_connect('select * from drivers').fetchall()
+
+    def select_drivers_by_team(self, team_id: str):
+        # 드라이버 리스트 팀 분류 - 전체 조회
+        print(f"select * from drivers where team_id = '{team_id}'")
+        return self.select_connect(f"select * from drivers where team_id = '{team_id}'").fetchall()
+
+    def select_driver_by_keyword(self, keyword):
+        sql = f"select * from drivers where name LIKE '%{keyword}%'"
+        return self.select_connect(sql).fetchall()
+
+    def select_driver_by_id(driver_id):
+        pass # ID로 조회
+
+dbmanager = DriversDBManager()

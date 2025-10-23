@@ -4,18 +4,21 @@
 '''
 import streamlit as st
 import pandas as pd
-from sql import drivers
-from data import flag
+from sql.drivers import DriversDBManager
 
-team_list = drivers.select_teams()
+st.set_page_config(page_title="레이서 목록", page_icon="🚗")
 
-cols = st.columns(2)  # 한 줄에 3개씩   
+driversDB = DriversDBManager()
+
+team_list = driversDB.select_teams()
+
+cols = st.columns(2)  # 한 줄에 2개씩   
 
 for t in team_list:
     team_name = t[0]
     st.subheader(team_name)
 
-    driver_list = drivers.select_drivers_by_team(team_name)
+    driver_list = driversDB.select_drivers_by_team(team_name)
     for i in range(0, len(driver_list), 2):
         cols = st.columns(2)
         for j, col in enumerate(cols):

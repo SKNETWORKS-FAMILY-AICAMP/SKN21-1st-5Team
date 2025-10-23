@@ -10,39 +10,15 @@ import time
 st.set_page_config(page_title="F1 Drivers", page_icon="data/logo.png")
 st.logo("data/logo.png")
 
-st.markdown("""
-   <style>
-   /* Keyframe for fade-in */
-   @keyframes fadeInTitle {
-       from {opacity: 0; transform: translateY(-10px);}
-   }  
-            
-   /* Apply animation to the custom title */
-   .fade-title {
-       font-size: 2.5em;
-       font-weight: 700;
-       text-align: center;
-       color: #ff4b4b;
-       animation: fadeInTitle 1.2 ease-in-out;
-   }
+load = False
 
-   <style>
-""", unsafe_allow_html=True)
+if not load:
+   load = True
 
-st.markdown('<h1 class="fade-title">FAST F1 페이지</h1>', unsafe_allow_html=True)
+   home   = st.Page("pages/driver_dashboard.py", title="대시보드",   icon="🏠")
+   intro   = st.Page("pages/driver_intro.py",  title="레이서 목록",   icon="🚗")
+   search = st.Page("pages/driver_search.py",title="레이서 검색",   icon="🔍")
+   repair = st.Page("pages/driver_comparison.py",title="레이서 비교",   icon="🆚")
 
-st.write("빨리빨리 F1 웹사이트에 오신것을 환영합니다. 원하시는 메뉴를 선택해 주세요")
-
-st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_container_width=True)
-
-col1, col2, col3 = st.columns(3)
-
-if col1.button('Main Menu'):
-   st.switch_page("app.py") 
-
-if col2.button('F1 운전자들'):
-   st.switch_page("driver_intro.py")
-
-if col3.button('F1 Driver Comparison'):
-   st.switch_page("driver_comparison(test).py")
-
+   nav = st.navigation([home, intro, search, repair])
+   nav.run()
