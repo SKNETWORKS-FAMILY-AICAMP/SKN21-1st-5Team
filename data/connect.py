@@ -30,10 +30,10 @@ class WebConnectManager:
         drivers = []
 
         for r in result:
-            last = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-regular__MOZq8.group-hover\/driver-card\:underline")[0].text
-            first = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-bold__m1yaJ.group-hover\/driver-card\:underline")[0].text
-            team = r.select("div.z-10.min-h-\[112px\].text-static-static-1 > div.pt-px-4.pb-px-16")[0].text
-            country = r.select("svg")[0].text
+            last = r.select_one("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-regular__MOZq8.group-hover\/driver-card\:underline").text
+            first = r.select_one("div.z-10.min-h-\[112px\].text-static-static-1 > p.typography-module_display-l-bold__m1yaJ.group-hover\/driver-card\:underline").text
+            team = r.select_one("div.z-10.min-h-\[112px\].text-static-static-1 > div.pt-px-4.pb-px-16").text
+            country = r.select_one("svg").text
             img = r.select("img")
             # print(first, last)
             # print(team)
