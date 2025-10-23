@@ -8,7 +8,8 @@ from data.connect import WebConnectManager
 
 db_host = "127.0.0.1"
 db_port = 3306
-user_name = "lucy"
+# user_name = "lucy"
+user_name = "playdata"
 db_password = "1111"
 db_name = "1st_pjt"
 
@@ -29,7 +30,7 @@ def insert_driver():
         wm = WebConnectManager()
         # print(wm.get_drivers2())
         # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
-        insert_sql = 'insert into drivers (name, team_id, country_id, image_url, create_date) values (%s, %s, %s, %s)'
+        insert_sql = 'insert into drivers (name, team_id, country_id, image_url, create_date) values (%s, %s, %s, %s, %s)'
         with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
             for v in wm.get_drivers():
                 with conn.cursor() as cursor:
@@ -66,7 +67,7 @@ def delete_driver_all():
         cursor = None
         wm = WebConnectManager()
         delete_sql = 'delete from drivers'
-        with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
+        with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
             cursor = conn.cursor()
 
             for v in wm.get_drivers():
