@@ -43,6 +43,36 @@ class WebConnectManager:
 
         return drivers
     
+    def get_driver(self, name):
+        soup = self.connect("/drivers/" + name)
+        selector = r"#statistics > div > div > div > div > div.order-1 > div  dl > div"
+        tags = soup.select(selector)
+
+        result_list = []
+        for info_div in tags:
+            title_tag = info_div.select_one('dt')
+            value_tag = info_div.select_one('dd')
+            title = title_tag.text
+            value = value_tag.text
+            result_list.append([title, value])
+
+        print(result_list)
+
+        return result_list
+
+    def get_driver_career(self, name):
+        soup = self.connect("/drivers/" + name)
+        data = soup.select('#statistics > div > div > div > div > div.order-3 > div > dl > div')
+
+        datalist = []
+        for i in data:
+            temp = []
+            temp.append(i.select_one('.DataGrid-module_title__hXN-n').text)
+            temp.append(i.select_one('.DataGrid-module_description__e-Mnw').text)
+            datalist.append(temp)
+
+        print(datalist)
+
     def get_drivers_dict(self):
         soup = self.connect("/drivers")
         result = soup.select("#maincontent > div > div > div > div > div.grid.grid-cols-1.\@\[680px\]\/page\:grid-cols-2.\@\[1660px\]\/page\:grid-cols-4.gap-px-16.lg\:gap-px-24 > div > a > div")
