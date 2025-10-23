@@ -13,6 +13,14 @@ user_name = "playdata"
 db_password = "1111"
 db_name = "1st_pjt"
 
+def select_connect(sql):
+    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
+        with conn.cursor() as cursor:
+            result = cursor.execute(sql)
+            
+            return cursor
+
+
 # drivers_db.py
 def insert_team():
     pass
@@ -86,18 +94,18 @@ def select_team():
 def select_country():
     pass # 전체조회
 
+def select_teams():
+    return select_connect('select distinct team_id from drivers').fetchall()
+
 def select_drivers():
     # 드라이버 리스트 전체 조회
     sql = 'select * from drivers'
-    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
-        with conn.cursor() as cursor:
-            result = cursor.execute(sql)
-            print("처리 행수:", result)
-            
-            return cursor.fetchall()
+    return select_connect('select * from drivers group').fetchall()
 
-def select_driver():
-    pass
+def select_drivers_by_team(team_id: str):
+    # 드라이버 리스트 팀 분류 - 전체 조회
+    print(f"select * from drivers where team_id = '{team_id}'")
+    return select_connect(f"select * from drivers where team_id = '{team_id}'").fetchall()
 
 def select_driver_by_keyword(keyword):
     sql = f"select * from drivers where name LIKE '%{keyword}%'"

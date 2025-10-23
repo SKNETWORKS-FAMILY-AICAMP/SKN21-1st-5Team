@@ -26,7 +26,7 @@ st.markdown('<h1 class="fade-title">FAST F1 페이지</h1>', unsafe_allow_html=T
 
 st.write("빨리빨리 F1 웹사이트에 오신것을 환영합니다. 원하시는 메뉴를 선택해 주세요")
 
-st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_column_width=True)
+st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_container_width=True)
 
 col1, col2, col3 = st.columns(3)
 
