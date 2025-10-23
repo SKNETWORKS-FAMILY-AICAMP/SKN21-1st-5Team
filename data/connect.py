@@ -37,7 +37,8 @@ class WebConnectManager:
             img = r.select_one("img").attrs["src"]
 
             name = f'{first} {last}'.strip()
-
+            name_path = name.lower().replace(" ", "-")
+            
             driver_dict = {
                 'name': name,
                 'team': team,
@@ -45,7 +46,7 @@ class WebConnectManager:
                 'image_url': img
             }    
             drivers.append(driver_dict)
-        
+
         return drivers
     
     def get_driver(self, name):
