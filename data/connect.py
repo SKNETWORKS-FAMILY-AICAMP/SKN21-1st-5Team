@@ -60,7 +60,18 @@ class WebConnectManager:
 
         return result_list
 
+    def get_driver_career(self, name):
+        soup = self.connect("/drivers/" + name)
+        data = soup.select('#statistics > div > div > div > div > div.order-3 > div > dl > div')
 
+        datalist = []
+        for i in data:
+            temp = []
+            temp.append(i.select_one('.DataGrid-module_title__hXN-n').text)
+            temp.append(i.select_one('.DataGrid-module_description__e-Mnw').text)
+            datalist.append(temp)
+
+        print(datalist)
 
     def get_drivers_dict(self):
         soup = self.connect("/drivers")
