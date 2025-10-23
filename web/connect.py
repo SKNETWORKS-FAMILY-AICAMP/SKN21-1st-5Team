@@ -11,25 +11,22 @@ class WebConnectManager:
     
     def __init__(self):
         pass
-
-    def connect(self, path, selector):
-        # 요청
         
+    def connect(self, path):
+        # 요청
         res = requests.get(self.url + path, headers={"user-agent":self.user_agent})
 
         if res.status_code == 200:
-            soup = BeautifulSoup(res.text, "lxml")
-            result = soup.select(selector)
-            print(result[0].prettify()[0:100])
-
-            return result
+            return BeautifulSoup(res.text, "lxml")
         else:
             print("응답을 받지 못함.", res.status_code)
             return None 
 
     def get_drivers(self):
-        result = self.connect("/drivers", "#maincontent > div > div > div > div > div.grid.grid-cols-1.\@\[680px\]\/page\:grid-cols-2.\@\[1660px\]\/page\:grid-cols-4.gap-px-16.lg\:gap-px-24 > div > a > div")
-        
+        soup = self.connect("/drivers")
+        result = soup.select("#maincontent > div > div > div > div > div.grid.grid-cols-1.\@\[680px\]\/page\:grid-cols-2.\@\[1660px\]\/page\:grid-cols-4.gap-px-16.lg\:gap-px-24 > div > a > div")
+        print(result[0].prettify()[0:100])
+
         drivers = []
 
         for r in result:
