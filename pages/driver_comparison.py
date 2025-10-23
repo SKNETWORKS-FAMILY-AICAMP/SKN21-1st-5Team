@@ -10,7 +10,7 @@ col1, col2 = st.columns([1, 1])
 driversDB = DriversDBManager()
 driver_list = driversDB.select_drivers()
 
-# st.text(driver_list)
+st.text(driver_list)
 
 # with col1:
 #     d = st.selectbox(

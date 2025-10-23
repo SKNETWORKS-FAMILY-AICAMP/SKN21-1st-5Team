@@ -5,7 +5,7 @@
  * 날짜: 2025-10-23
  */
 
-CREATE DATABASE 1st_pjt;
+-- CREATE DATABASE 1st_pjt;
 USE  1st_pjt;
 
 DROP TABLE IF EXISTS  drivers_2;
@@ -54,6 +54,7 @@ CREATE table drivers (
   	create_date DATETIME NOT NULL COMMENT '생성일시'
 ) COMMENT='드라이버 정보';
 
+DROP TABLE IF EXISTS  season_stats;
 CREATE TABLE season_stats (
 	name VARCHAR(50) PRIMARY key COMMENT '이름',
 	season_position int,
@@ -75,6 +76,7 @@ CREATE TABLE season_stats (
   	create_date DATETIME NOT NULL COMMENT '생성일시'
 ) COMMENT='선수별 시즌성적';
 
+DROP TABLE IF EXISTS  career_stats;
 CREATE TABLE career_stats (
 	name VARCHAR(50) PRIMARY key COMMENT '이름',
 	grand_prix_entered int,
@@ -84,5 +86,6 @@ CREATE TABLE career_stats (
 	highest_grid_position int,
 	pole_positions int,
 	world_championships int,
+	dnfs int,
   	create_date DATETIME NOT NULL COMMENT '생성일시'
 ) COMMENT='선수별 통산성적';

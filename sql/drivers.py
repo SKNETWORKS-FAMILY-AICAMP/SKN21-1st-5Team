@@ -5,6 +5,7 @@
 import pymysql
 from datetime import datetime
 from data.connect import WebConnectManager
+from data.driver import DriverData
 from sql.db_connect import DBManager
 
 class DriversDBManager(DBManager):
@@ -78,22 +79,53 @@ class DriversDBManager(DBManager):
         pass # 전체조회
 
     def select_teams(self):
-        return self.select_connect('select distinct team_id from drivers').fetchall()
+        return self._select_connect('select distinct team_id from drivers').fetchall()
 
-    def select_drivers(self):
+    def select_drivers(self) -> list[DriverData]:
         # 드라이버 리스트 전체 조회
-        return self.select_connect('select * from drivers').fetchall()
+        result = self._select_connect('select name, team_id, country_id, image_url from drivers').fetchall()
 
-    def select_drivers_by_team(self, team_id: str):
-        # 드라이버 리스트 팀 분류 - 전체 조회
-        print(f"select * from drivers where team_id = '{team_id}'")
-        return self.select_connect(f"select * from drivers where team_id = '{team_id}'").fetchall()
+        if result:
+            datas = []
 
-    def select_driver_by_keyword(self, keyword):
-        sql = f"select * from drivers where name LIKE '%{keyword}%'"
-        return self.select_connect(sql).fetchall()
+            for r in result:
+                name, team_id, country_id, image_url  = r[0], r[1], r[2], r[3]
+                data = DriverData(name, team_id, country_id, image_url)
+                datas.append(data)
+                
+            return datas
+        else:
+            return []
+    
+    def select_drivers_by_team(self, team_id: str) -> list[DriverData]:
+        # 드라이버 리스트 팀 기준 - 드라이버 전체 조회
+        result = self._select_connect(f"select name, team_id, country_id, image_url from drivers where team_id = '{team_id}'").fetchall()
+
+        datas = []
+
+        for r in result:
+            name, team_id, country_id, image_url  = r[0], r[1], r[2], r[3]
+            data = DriverData(name, team_id, country_id, image_url)
+            datas.append(data)
+            
+        return datas
+
+    def select_driver_by_keyword(self, keyword) -> list[DriverData]:
+        # 드라이버 리스트 - 키워드 검색
+        sql = f"select name, team_id, country_id, image_url from drivers where name LIKE '%{keyword}%'"
+        result = self._select_connect(sql).fetchall()
+
+        datas = []
+
+        for r in result:
+            name, team_id, country_id, image_url  = r[0], r[1], r[2], r[3]
+            data = DriverData(name, team_id, country_id, image_url)
+            datas.append(data)
+        
+        return datas
 
     def select_driver_by_id(driver_id):
         pass # ID로 조회
 
 dbmanager = DriversDBManager()
+dbmanager.select_driver_by_keyword("a")
