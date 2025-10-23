@@ -42,3 +42,29 @@ class WebConnectManager:
             drivers.append((first, last, team, country))
 
         return drivers
+    
+    def get_driver(self, name):
+        soup = self.connect("/drivers/" + name)
+        selector = r"#statistics > div > div > div > div > div.order-1 > div  dl > div"
+        tags = soup.select(selector)
+
+        result_list = []
+        for info_div in tags:
+            title_tag = info_div.select_one('dt')
+            value_tag = info_div.select_one('dd')
+            title = title_tag.text
+            value = value_tag.text
+            result_list.append([title, value])
+
+        print(result_list)
+
+        return result_list
+
+
+   
+                
+    
+
+
+
+    
