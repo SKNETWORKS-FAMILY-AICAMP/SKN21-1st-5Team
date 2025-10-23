@@ -15,7 +15,7 @@ def insert_team():
         # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
         insert_sql = 'insert into drivers (name, team_id, country_id, create_date) values (%s, %s, %s, %s)'
         with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
-            for v in wm.get_drivers_dict():
+            for v in wm.get_drivers():
                 with conn.cursor() as cursor:
                     name = v['name']
                     team = v['team']
