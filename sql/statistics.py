@@ -20,6 +20,23 @@ def insert_season_statistics():
         name = d[0]
         path_name = name.lower().replace(" ", "-")
         print(path_name)
+        wm = WebConnectManager()
+        print(wm.get_driver(path_name))
 
 def insert_statistics():
-    pass
+    driver_list = drivers.select_drivers()
+    for d in driver_list:
+        name = d[0]
+        path_name = name.lower().replace(" ", "-")
+        print(path_name)
+        wm = WebConnectManager()
+        print(wm.get_driver_career(path_name))
+
+def select_statistics():
+    # sql = 'select * from drivers'
+    # with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
+    #     with conn.cursor() as cursor:
+    #         result = cursor.execute(sql)
+    #         print("처리 행수:", result)
+            
+    #         return cursor.fetchall()

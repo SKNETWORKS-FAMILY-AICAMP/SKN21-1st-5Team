@@ -61,8 +61,6 @@ class WebConnectManager:
             value = value_tag.text
             result_list.append([title, value])
 
-        print(result_list)
-
         return result_list
 
     def get_driver_career(self, name):
@@ -70,10 +68,11 @@ class WebConnectManager:
         data = soup.select('#statistics > div > div > div > div > div.order-3 > div > dl > div')
 
         datalist = []
+        
         for i in data:
             temp = []
             temp.append(i.select_one('.DataGrid-module_title__hXN-n').text)
             temp.append(i.select_one('.DataGrid-module_description__e-Mnw').text)
             datalist.append(temp)
 
-        print(datalist)
+        return datalist

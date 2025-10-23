@@ -93,7 +93,7 @@ def select_drivers():
         with conn.cursor() as cursor:
             result = cursor.execute(sql)
             print("처리 행수:", result)
-                
+            
             return cursor.fetchall()
 
 def select_driver():
