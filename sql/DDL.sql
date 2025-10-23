@@ -45,8 +45,8 @@ CREATE table drivers_2 (
 DROP TABLE IF EXISTS  drivers;
 CREATE table drivers (
  	name VARCHAR(50) PRIMARY key COMMENT '이름',
-  	team_id INT COMMENT '팀 아이디',
-  	country_id VARCHAR(10)   NOT NULL COMMENT '나라 아이디',
+  	team_id VARCHAR(50) COMMENT '팀 아이디',
+  	country_id VARCHAR(50)   NOT NULL COMMENT '나라 아이디',
   	email varchar(100) unique key COMMENT '이메일',
   	gender char(1) check(gender in('m', 'f')) COMMENT '성별(m,f)',
   	description VARCHAR(500) COMMENT '설명',

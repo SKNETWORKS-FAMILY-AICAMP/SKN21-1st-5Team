@@ -2,10 +2,13 @@
 작성자: 김가람
 날짜: 2025-10-22
 '''
+import pymysql
+from web.connect import WebConnectManager
 
 # drivers_db.py
-def insert_team(name, email, tall, birthday):
+def insert_team():
     pass
+
 def insert_country(name, email, tall, birthday):
     pass
 def insert_driver(name, team, country, img):
