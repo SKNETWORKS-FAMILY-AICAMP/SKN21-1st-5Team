@@ -61,12 +61,6 @@ class WebConnectManager:
         return result_list
 
 
-   
-                
-    
-
-
-
 
     def get_drivers_dict(self):
         soup = self.connect("/drivers")

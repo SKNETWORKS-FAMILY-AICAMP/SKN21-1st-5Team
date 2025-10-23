@@ -18,3 +18,4 @@ st.title(f"F1 Drivers {year}")
 st.image("data/logo.png")
 # st.button("test", on_click=drivers.select_team)
 # st.sidebar.page_link("pages/player_intro.py", label="Home", icon='🏠')
+
