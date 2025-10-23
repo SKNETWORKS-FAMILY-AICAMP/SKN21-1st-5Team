@@ -1,14 +1,8 @@
-'''
-작성자: 김가람
-날짜: 2025-10-22
-'''
 import streamlit as st
 import pandas as pd 
 import numpy as np
 import time 
 
-st.set_page_config(page_title="F1 Drivers", page_icon="data/logo.png")
-st.logo("data/logo.png")
 
 st.markdown("""
    <style>
@@ -25,7 +19,6 @@ st.markdown("""
        color: #ff4b4b;
        animation: fadeInTitle 1.2 ease-in-out;
    }
-
    <style>
 """, unsafe_allow_html=True)
 
@@ -44,5 +37,12 @@ if col2.button('F1 운전자들'):
    st.switch_page("driver_intro.py")
 
 if col3.button('F1 Driver Comparison'):
-   st.switch_page("driver_comparison(test).py")
+   st.switch_page("driver_comparison.py")
+
+
+
+
+
+
+   
 
