@@ -7,7 +7,8 @@ from data.connect import WebConnectManager
 
 wm = WebConnectManager()
 
-for v in wm.get_drivers():
-    # name = (v[1] + "-" + v[0]).lower()
-    # driver = wm.get_driver(name)
-    st.text(v)
+# for v in wm.get_drivers():
+#     # name = (v[1] + "-" + v[0]).lower()
+#     # driver = wm.get_driver(name)
+#     st.text(v)
+

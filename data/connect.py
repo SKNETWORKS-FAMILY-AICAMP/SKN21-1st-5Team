@@ -45,7 +45,7 @@ class WebConnectManager:
                 'image_url': img
             }    
             drivers.append(driver_dict)
-
+        
         return drivers
     
     def get_driver(self, name):
