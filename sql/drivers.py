@@ -6,6 +6,12 @@ import pymysql
 from datetime import datetime
 from data.connect import WebConnectManager
 
+db_host = "127.0.0.1"
+db_port = 3306
+user_name = "lucy"
+db_password = "1111"
+db_name = "1st_pjt"
+
 # drivers_db.py
 def insert_team():
     pass
@@ -24,7 +30,7 @@ def insert_driver():
         # print(wm.get_drivers2())
         # insert_sql = "insert into drivers (name, team_id, country_id, email, gender, description, image_url, create_date) values(%s, %s, %s, %s, %s)"
         insert_sql = 'insert into drivers (name, team_id, country_id, create_date) values (%s, %s, %s, %s)'
-        with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
+        with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
             for v in wm.get_drivers():
                 with conn.cursor() as cursor:
                     name = v['name']
@@ -77,7 +83,25 @@ def select_team():
     pass # 전체조회
 def select_country():
     pass # 전체조회
+
+def select_drivers():
+    # 드라이버 리스트 전체 조회
+    sql = 'select * from drivers'
+    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
+        with conn.cursor() as cursor:
+                result = cursor.execute(sql)
+                print("처리 행수:", result)
+
 def select_driver():
-    pass # 전체조회
+    pass
+
+def select_driver_by_keyword(keyword):
+    sql = f"select * from drivers where name LIKE '%{keyword}%'"
+
+    with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
+        with conn.cursor() as cursor:
+                result = cursor.execute(sql)
+                print("처리 행수:", result)
+
 def select_driver_by_id(driver_id):
     pass # ID로 조회
