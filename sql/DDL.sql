@@ -53,3 +53,36 @@ CREATE table drivers (
   	image_url text NULL DEFAULT NULL COMMENT '이미지',
   	create_date DATETIME NOT NULL COMMENT '생성일시'
 ) COMMENT='드라이버 정보';
+
+CREATE TABLE season_stats (
+	name VARCHAR(50) PRIMARY key COMMENT '이름',
+	season_position int,
+  	season_points int,
+	grand_prix_races int,
+	grand_prix_points int,
+	grand_prix_wins int,
+	grand_prix_podiums int,
+	grand_prix_poles int,
+	grand_prix_top_10s int,
+	dhl_fastest_laps int,
+	dnfs int,
+	sprint_races int,
+	sprint_points int,
+	sprint_wins int,
+	sprint_podiums int,
+	sprint_poles int,
+	sprint_top_10s int,
+  	create_date DATETIME NOT NULL COMMENT '생성일시'
+) COMMENT='선수별 시즌성적';
+
+CREATE TABLE career_stats (
+	name VARCHAR(50) PRIMARY key COMMENT '이름',
+	grand_prix_entered int,
+  	career_points int,
+	highest_race_finish int,
+	podiums int,
+	highest_grid_position int,
+	pole_positions int,
+	world_championships int,
+  	create_date DATETIME NOT NULL COMMENT '생성일시'
+) COMMENT='선수별 통산성적';
