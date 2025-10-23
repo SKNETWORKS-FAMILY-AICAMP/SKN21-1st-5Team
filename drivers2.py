@@ -3,7 +3,7 @@
 날짜: 2025-10-22
 '''
 import pymysql
-from web.connect import WebConnectManager
+from data.connect import WebConnectManager
 from datetime import datetime
 
 # drivers_db.py
@@ -20,7 +20,7 @@ def insert_team():
                 with conn.cursor() as cursor:
                     name = v['name']
                     team = v['team']
-                    country = v['country']
+                    country = v['country'].replace('Flag of ', '')
                     create_date = datetime.now()
 
                     print(f'name : {name},  {team}, {country}, {create_date}')
