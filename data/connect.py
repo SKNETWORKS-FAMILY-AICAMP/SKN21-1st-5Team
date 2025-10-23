@@ -36,8 +36,7 @@ class WebConnectManager:
             country = r.select_one("svg").text
             img = r.select_one("img").attrs["src"]
 
-            name = f'{first} {last}'.strip()
-            name_path = name.lower().replace(" ", "-")
+            name = f'{last} {first}'.strip()
             
             driver_dict = {
                 'name': name,

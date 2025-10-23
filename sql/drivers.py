@@ -91,8 +91,10 @@ def select_drivers():
     sql = 'select * from drivers'
     with pymysql.connect(host=db_host, port=db_port, user=user_name, password=db_password, db=db_name) as conn:
         with conn.cursor() as cursor:
-                result = cursor.execute(sql)
-                print("처리 행수:", result)
+            result = cursor.execute(sql)
+            print("처리 행수:", result)
+                
+            return cursor.fetchall()
 
 def select_driver():
     pass

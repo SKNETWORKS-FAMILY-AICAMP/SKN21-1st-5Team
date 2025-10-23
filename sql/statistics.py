@@ -3,6 +3,7 @@
 날짜: 2025-10-23
 '''
 import pymysql
+from sql import drivers
 from datetime import datetime
 from data.connect import WebConnectManager
 
@@ -14,7 +15,11 @@ db_password = "1111"
 db_name = "1st_pjt"
 
 def insert_season_statistics():
-    pass
+    driver_list = drivers.select_drivers()
+    for d in driver_list:
+        name = d[0]
+        path_name = name.lower().replace(" ", "-")
+        print(path_name)
 
 def insert_statistics():
     pass
