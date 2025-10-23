@@ -48,32 +48,50 @@ class WebConnectManager:
 
         return drivers
     
-    def get_driver(self, name):
-        soup = self.connect("/drivers/" + name)
+    def get_driver(self, name) -> dict:
+        path_name = name.lower().replace(" ", "-")
+
+        soup = self.connect("/drivers/" + path_name)
         selector = r"#statistics > div > div > div > div > div.order-1 > div  dl > div"
         tags = soup.select(selector)
 
-        result_list = []
+        dict = {"name": name}
+
         for info_div in tags:
             title_tag = info_div.select_one('dt')
             value_tag = info_div.select_one('dd')
-            title = title_tag.text
-            value = value_tag.text
-            result_list.append([title, value])
+            title: str = title_tag.text.lower().replace(" ", "_")
+            value: str = value_tag.text
 
-        print(result_list)
+            if "st" in value or "th"in value or "nd"in value or "rd"in value:
+                value = value.replace("st", "")
+                value = value.replace("th", "")
+                value = value.replace("nd", "")
+                value = value.replace("rd", "")
 
-        return result_list
+            print(title, value)
 
-    def get_driver_career(self, name):
-        soup = self.connect("/drivers/" + name)
+            dict[title] = value
+
+        return dict
+
+    def get_driver_career(self, name) -> dict:
+        path_name = name.lower().replace(" ", "-")
+        
+        soup = self.connect("/drivers/" + path_name)
         data = soup.select('#statistics > div > div > div > div > div.order-3 > div > dl > div')
 
-        datalist = []
+        dict = {"name": name}
+
         for i in data:
             temp = []
-            temp.append(i.select_one('.DataGrid-module_title__hXN-n').text)
-            temp.append(i.select_one('.DataGrid-module_description__e-Mnw').text)
-            datalist.append(temp)
+            title_text: str = i.select_one('.DataGrid-module_title__hXN-n').text
+            title: str = title_text.lower().replace(" ", "_")
+            value: str = i.select_one('.DataGrid-module_description__e-Mnw').text
 
-        print(datalist)
+            if " " in value:
+                value = value.split(" ")[0]
+
+            dict[title] = value
+
+        return dict
