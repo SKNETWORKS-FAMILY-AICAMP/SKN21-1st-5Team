@@ -62,7 +62,7 @@ def delete_driver_all():
         with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
             cursor = conn.cursor()
 
-            for v in wm.get_drivers_dict():
+            for v in wm.get_drivers():
                 with conn.cursor() as cursor:
                     result = cursor.execute(delete_sql)
                     conn.commit()
