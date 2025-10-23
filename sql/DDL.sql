@@ -8,7 +8,7 @@
 CREATE DATABASE 1st_pjt;
 USE  1st_pjt;
 
-DROP TABLE IF EXISTS  drivers;
+DROP TABLE IF EXISTS  drivers_2;
 DROP TABLE IF EXISTS country;
 CREATE TABLE country (
 	country_id VARCHAR(10) PRIMARY key COMMENT '나라 코드',
@@ -27,8 +27,8 @@ CREATE TABLE team (
   	create_date DATE NOT NULL COMMENT '생성일시'
 ) COMMENT='팀 정보';
 
-DROP TABLE IF EXISTS  drivers;
-CREATE table drivers (
+DROP TABLE IF EXISTS  drivers_2;
+CREATE table drivers_2 (
 	driver_id INT PRIMARY key AUTO_INCREMENT COMMENT '아이디',
   	name VARCHAR(50) NOT NULL COMMENT '이름',
   	team_id INT COMMENT '팀 아이디',
@@ -40,4 +40,16 @@ CREATE table drivers (
   	create_date DATE NOT NULL COMMENT '생성일시',
 	CONSTRAINT fk_team FOREIGN KEY(team_id) REFERENCES team(team_id),
     CONSTRAINT fk_country FOREIGN KEY(country_id) REFERENCES country(country_id)
+) COMMENT='드라이버 정보';
+
+DROP TABLE IF EXISTS  drivers;
+CREATE table drivers (
+ 	name VARCHAR(50) PRIMARY key COMMENT '이름',
+  	team_id INT COMMENT '팀 아이디',
+  	country_id VARCHAR(10)   NOT NULL COMMENT '나라 아이디',
+  	email varchar(100) unique key COMMENT '이메일',
+  	gender char(1) check(gender in('m', 'f')) COMMENT '성별(m,f)',
+  	description VARCHAR(500) COMMENT '설명',
+  	image_url text NULL DEFAULT NULL COMMENT '이미지',
+  	create_date DATE NOT NULL COMMENT '생성일시'
 ) COMMENT='드라이버 정보';
