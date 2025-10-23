@@ -3,10 +3,20 @@
 날짜: 2025-10-22
 '''
 import pymysql
+from datetime import datetime
 from data.connect import WebConnectManager
 
 # drivers_db.py
 def insert_team():
+    pass
+
+def insert_country(name, email, tall, birthday):
+    pass
+
+def insert_driver():
+
+    delete_driver_all()
+    
     try:
         conn = None
         cursor = None
@@ -19,7 +29,7 @@ def insert_team():
                 with conn.cursor() as cursor:
                     name = v['name']
                     team = v['team']
-                    country = v['country']
+                    country = v['country'].replace('Flag of ', '')
                     create_date = datetime.now()
 
                     print(f'name : {name},  {team}, {country}, {create_date}')
@@ -27,13 +37,9 @@ def insert_team():
                     result = cursor.execute(insert_sql, [name, team, country, create_date])
                     conn.commit()
                     print("처리 행수:", result)
+                    # return result
     finally:
         pass
-
-def insert_country(name, email, tall, birthday):
-    pass
-def insert_driver(name, team, country, img):
-    pass
 
 def update_team(team_id):
     pass
@@ -46,11 +52,28 @@ def delee_team(team_id):
     pass
 def delete_country(country_id):
     pass
-def delete_driver(driver_id):
-    pass
+
+def delete_driver_all():
+    try:
+        conn = None
+        cursor = None
+        wm = WebConnectManager()
+        delete_sql = 'delete from drivers'
+        with pymysql.connect(host="127.0.0.1", port=3306, user='playdata', password='1111', db='1st_pjt') as conn:
+            cursor = conn.cursor()
+
+            for v in wm.get_drivers_dict():
+                with conn.cursor() as cursor:
+                    result = cursor.execute(delete_sql)
+                    conn.commit()
+                    print("처리 행수:", result)
+    finally:
+        pass
 
 
 def select_team():
+    print('have a good')
+    WebConnectManager().get_drivers()
     pass # 전체조회
 def select_country():
     pass # 전체조회
