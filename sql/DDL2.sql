@@ -27,7 +27,7 @@ CREATE TABLE season_stats_aggr (
 
 DROP TABLE IF EXISTS  career_stats_aggr;
 CREATE TABLE career_stats_aggr (
-	id int NOT NULL AUTO_INCREMENT COMMENT '아이디',
+	id int PRIMARY key AUTO_INCREMENT COMMENT '아이디',
 	grand_prix_entered int,
   	career_points int,
 	highest_race_finish int,
