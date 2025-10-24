@@ -14,13 +14,10 @@ driversDB = DriversDBManager()
 driver_list: list[DriverData] = driversDB.select_drivers()
 driver_name_list = [d.name for d in driver_list]
 
+statisticsDB = StatisticsDBManager()
+stats_list = statisticsDB.select_season_statistics()
+career_list = statisticsDB.select_career_statistics()
 
-# for driver in driver_list:
-#     country_file_name = driver.country.lower().replace(" ", "_")
-#     d = (driver.name, driver.team, country_file_name, driver.img)
-#     st.text(d)
-#     st.image(f"data/flag/{country_file_name}.png", width=25)
-#     st.image(driver.img)
 
 if 'selected_racer1' not in st.session_state:
     st.session_state['selected_racer1'] = None
@@ -51,6 +48,9 @@ def select_racer(racer_name: str):
         # 두 칸이 모두 차있으면, 첫 번째 레이서를 교체
         st.session_state['selected_racer1'] = racer_name
 
+    st.rerun()
+
+
 # ------------------------------------------------------------
 # 4. 상단 버튼 구성
 # ------------------------------------------------------------
@@ -78,15 +78,12 @@ for i, racer in enumerate(driver_name_list):
         if st.button(button_label, key=f"btn_{racer}", use_container_width=True):
             select_racer(racer)
 
-            path_name = racer.lower().replace(" ", "-")
-            statisticsDB = StatisticsDBManager()
-            stats: Statistic = statisticsDB.select_season_stats_by_driver(path_name)
-            career: CareerStatistic = statisticsDB.select_career_stats_by_driver(path_name)
+            racer = racer.lower().replace(" ", "-")
 
 st.markdown("---")
 
 # ------------------------------------------------------------
-# 5. 3개 컬럼 레이아웃 구성
+# 5. 컬럼 레이아웃 구성
 # ------------------------------------------------------------
 
 col1, col2 = st.columns([1, 1])
@@ -94,21 +91,50 @@ col1, col2 = st.columns([1, 1])
 racer1_name = st.session_state['selected_racer1']
 racer2_name = st.session_state['selected_racer2']
 
-# ------------------------------------------------
+
 # 5.1. 왼쪽 컬럼: 레이서 1 정보
-# ------------------------------------------------
-# statisticsDB = StatisticsDBManager()
-# stats: Statistic = statisticsDB.select_season_stats_by_driver(data.name)
-# career: CareerStatistic = statisticsDB.select_career_stats_by_driver(data.name)
 
-
-with col1:
+with col1:    
     st.subheader("🔴 레이서 1")
     if racer1_name:
         st.metric("선택된 레이서", racer1_name)
-        # 레이서 1 상세 정보 (데이터 로딩 필요)
-        st.info(f"팀: [DB에서 {racer1_name}의 팀 로딩]")
-        st.info(f"국적: [DB에서 {racer1_name}의 국적 로딩]")
+
+        stats = [s for s in stats_list if s["name"] == racer1_name][0]
+        career = [s for s in career_list if s["name"] == racer1_name][0]
+
+        st.subheader("2025 Season")                
+        
+        st.metric(
+            label="Season Position",
+            value=str(stats["season_position"])
+        )
+
+        st.metric(
+            label="Season Points",
+            value=str(stats["season_points"])
+        )
+
+        st.metric(
+            label="DNFs",
+            value=str(stats["dnfs"])
+        )
+    
+        st.subheader("CAREER STATS")
+
+        st.metric(
+            label="Grand Prix Entered",
+            value=str(career["grand_prix_entered"])
+        )
+
+        st.metric(
+            label="Career Points",
+            value=str(career["career_points"])
+        )
+
+        st.metric(
+            label="DNFs",
+            value=str(career["dnfs"])
+        )
     else:
         st.warning("레이서 1을 선택해 주세요.")
 
@@ -121,8 +147,43 @@ with col2:
     if racer2_name:
         st.metric("선택된 레이서", racer2_name)
         # 레이서 2 상세 정보 (데이터 로딩 필요)
-        st.info(f"팀: [DB에서 {racer2_name}의 팀 로딩]")
-        st.info(f"국적: [DB에서 {racer2_name}의 국적 로딩]")
+        
+        stats = [s for s in stats_list if s["name"] == racer2_name][0]
+        career = [s for s in career_list if s["name"] == racer2_name][0]
+          
+        st.subheader("2025 Season")
+
+        st.metric(
+            label="Season Position",
+            value=str(stats["season_position"])
+        )
+
+        st.metric(
+            label="Season Points",
+            value=str(stats["season_points"])
+        )
+
+        st.metric(
+            label="DNFs",
+            value=str(stats["dnfs"])
+        )
+    
+        st.subheader("CAREER STATS")
+
+        st.metric(
+            label="Grand Prix Entered",
+            value=str(career["grand_prix_entered"])
+        )
+
+        st.metric(
+            label="Career Points",
+            value=str(career["career_points"])
+        )
+
+        st.metric(
+            label="DNFs",
+            value=str(career["dnfs"])
+        )
     else:
         st.warning("레이서 2를 선택해 주세요.")
 
