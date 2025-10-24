@@ -8,7 +8,6 @@
 -- CREATE DATABASE 1st_pjt;
 USE  1st_pjt;
 
-DROP TABLE IF EXISTS  drivers_2;
 DROP TABLE IF EXISTS country;
 CREATE TABLE country (
 	country_id VARCHAR(10) PRIMARY key COMMENT '나라 코드',
