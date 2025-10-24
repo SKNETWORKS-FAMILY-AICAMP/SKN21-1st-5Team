@@ -7,8 +7,8 @@ import pymysql
 class DBManager:
     db_host = "127.0.0.1"
     db_port = 3306
-    # user_name = "root"
-    user_name = "playdata"
+    user_name = "root"
+    # user_name = "playground"
     db_password = "1111"
     db_name = "1st_pjt"
     

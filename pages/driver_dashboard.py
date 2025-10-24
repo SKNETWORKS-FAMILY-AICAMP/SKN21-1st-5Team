@@ -6,45 +6,60 @@ import streamlit as st
 import pandas as pd 
 import numpy as np
 import time 
+from pages import driver_dashboard_kr as dashboard_kr
 
-if st.button("Korean"):
-   st.switch_page(st.Page('driver_dashboard_kr.py')) 
+if 'selected_lang' not in st.session_state:
+    st.session_state['selected_lang'] = None
 
-st.markdown("""
-   <style>
-   /* Keyframe for fade-in */
-   @keyframes fadeInTitle {
-       from {opacity: 0; transform: translateY(-10px);}
-   }  
-            
-   /* Apply animation to the custom title */
-   .fade-title {
-       font-size: 2.5em;
-       font-weight: 700;
-       text-align: center;
-       color: #ff4b4b;
-       animation: fadeInTitle 1.2 ease-in-out;
-   }
-   <style>
-""", unsafe_allow_html=True)
+if st.session_state['selected_lang'] == "kr":
+   if st.button("English"):
+      st.session_state['selected_lang'] = "en"
+      st.rerun()
+else:
+   if st.button("Korean"):
+      st.session_state['selected_lang'] = "kr"
+      st.rerun()
 
-st.markdown('<h1 class="fade-title">FAST F1 DATABASE</h1>', unsafe_allow_html=True)
+def load_en():
+   st.markdown("""
+      <style>
+      /* Keyframe for fade-in */
+      @keyframes fadeInTitle {
+         from {opacity: 0; transform: translateY(-10px);}
+      }  
+               
+      /* Apply animation to the custom title */
+      .fade-title {
+         font-size: 2.5em;
+         font-weight: 700;
+         text-align: center;
+         color: #ff4b4b;
+         animation: fadeInTitle 1.2 ease-in-out;
+      }
+      <style>
+   """, unsafe_allow_html=True)
 
-st.write("Welcome to Fast F1 Website. Korea's very own fast service F1 Database. Please Select Your Menu")
+   st.markdown('<h1 class="fade-title">FAST F1 DATABASE</h1>', unsafe_allow_html=True)
 
-st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_container_width=True)
+   st.write("Welcome to Fast F1 Website. Korea's very own fast service F1 Database. Please Select Your Menu")
 
-col1, col2, col3 = st.columns(3)
+   st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_container_width=True)
 
-if col1.button('Team Racer List'):
-   st.switch_page("pages/driver_intro.py") 
+   col1, col2, col3 = st.columns(3)
 
-if col2.button('Search Racers'):
-   st.switch_page("pages/driver_search.py")
+   if col1.button('Team Racer List'):
+      st.switch_page("pages/driver_intro.py") 
 
-if col3.button('Driver Status Comparison'):
-   st.switch_page("pages/driver_comparison.py")
+   if col2.button('Search Racers'):
+      st.switch_page("pages/driver_search.py")
 
-st.title("About Us")
-st.write("Much like our beloved F1 drivers, Fast F1 Database is a page that is dedicated to bring the fastest and latest update on F1. This includes race updates, scores, player analysis, track analysis and plenty of other F1 related medias and news. Our Database will always strive to provide the most reliable and fastest database related with F1, and we hope to share our love and interest with all the fans of the greatest racing event in the world.")
+   if col3.button('Driver Status Comparison'):
+      st.switch_page("pages/driver_comparison.py")
 
+   st.title("About Us")
+   st.write("Much like our beloved F1 drivers, Fast F1 Database is a page that is dedicated to bring the fastest and latest update on F1. This includes race updates, scores, player analysis, track analysis and plenty of other F1 related medias and news. Our Database will always strive to provide the most reliable and fastest database related with F1, and we hope to share our love and interest with all the fans of the greatest racing event in the world.")
+
+if st.session_state['selected_lang'] == "kr":
+   dashboard_kr.load_kr()
+else:
+   load_en()
