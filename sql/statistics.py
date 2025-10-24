@@ -189,9 +189,9 @@ class StatisticsDBManager(DBManager):
     def _delete_career_statistics(self):
         self._delete_connect('delete from career_stats')
 
-    def select_season_statistics(self) -> list:
+    def select_season_statistics(self) -> list[dict]:
         # 시즌 성적 전체 조회
-        result = self._select_connect('select * from season_stats').fetchall()
+        result = self._select_connect_dict('select * from season_stats').fetchall()
 
         if result:
             datas = []
@@ -208,9 +208,9 @@ class StatisticsDBManager(DBManager):
         result = self._select_connect(f"select name, season_position, season_points, grand_prix_races, grand_prix_points, grand_prix_wins, grand_prix_podiums, grand_prix_poles, grand_prix_top_10s, dhl_fastest_laps, dnfs, sprint_races, sprint_points, sprint_wins, sprint_podiums, sprint_poles, sprint_top_10s from season_stats where name = '{name}'").fetchone()
         return Statistic(*result)
         
-    def select_career_statistics(self) -> list:
+    def select_career_statistics(self) -> list[dict]:
         # 레이서 선수 성적 전체 조회
-        result = self._select_connect('select * from career_stats').fetchall()
+        result = self._select_connect_dict('select * from career_stats').fetchall()
 
         if result:
             datas = []

@@ -1,14 +1,10 @@
-'''
-작성자: 김가람
-날짜: 2025-10-23
-'''
 import streamlit as st
 import pandas as pd 
 import numpy as np
 import time 
 
-if st.button("Korean"):
-   st.switch_page(st.Page('driver_dashboard_kr.py')) 
+if st.button("English"):
+   st.switch_page("pages/driver_dashboard.py") 
 
 st.markdown("""
    <style>
@@ -30,21 +26,20 @@ st.markdown("""
 
 st.markdown('<h1 class="fade-title">FAST F1 DATABASE</h1>', unsafe_allow_html=True)
 
-st.write("Welcome to Fast F1 Website. Korea's very own fast service F1 Database. Please Select Your Menu")
+st.write("한국의 Fast F1 데이타 베이스에 오신것을 환영합니다. 메뉴의 옵션을 선택주세요")
 
 st.image("https://www.grandprix247.com/wp-content/uploads/2025/04/f1-movie-brad-pitt-poster-750x400.jpg", caption="F1 Movie Poster Copyright © Apple Films 2025", use_container_width=True)
 
 col1, col2, col3 = st.columns(3)
 
-if col1.button('Team Racer List'):
+if col1.button('팀원 리스트'):
    st.switch_page("pages/driver_intro.py") 
 
-if col2.button('Search Racers'):
+if col2.button('선수 검색'):
    st.switch_page("pages/driver_search.py")
 
-if col3.button('Driver Status Comparison'):
+if col3.button('선수 기록 현황'):
    st.switch_page("pages/driver_comparison.py")
 
-st.title("About Us")
-st.write("Much like our beloved F1 drivers, Fast F1 Database is a page that is dedicated to bring the fastest and latest update on F1. This includes race updates, scores, player analysis, track analysis and plenty of other F1 related medias and news. Our Database will always strive to provide the most reliable and fastest database related with F1, and we hope to share our love and interest with all the fans of the greatest racing event in the world.")
-
+st.title("싸이트 소개")
+st.write("저희의 열정적인 F1선수들처럼, FAST F1 데이타 베이스는 F1경기와 선수들에 있어, 실시간으로 빠르고, 정확하고, 그리고 항상 신선한 특급 F1관련 정보를 제공하는 페이지 입니다. F1에 관련하여 열정있는 팬들분들게, 항상 F1관련된 정보를 빠르고 정확하게 드리고자 합니다.")
