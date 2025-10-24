@@ -49,3 +49,24 @@ class Statistic:
         self.sprint_poles = sprint_poles
         self.sprint_top_10s = sprint_top_10s
 
+@dataclass
+class CareerStatistic:
+    def __init__(self,
+                 name,
+                 grand_prix_entered,
+                 career_points,
+                 highest_race_finish,
+                 podiums,
+                 highest_grid_position,
+                 pole_positions,
+                 world_championships,
+                 dnfs):
+        self.name = name
+        self.grand_prix_entered = grand_prix_entered
+        self.career_points = career_points
+        self.highest_race_finish = highest_race_finish
+        self.podiums = podiums
+        self.highest_grid_position = highest_grid_position
+        self.pole_positions = pole_positions
+        self.world_championships = world_championships
+        self.dnfs = dnfs

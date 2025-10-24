@@ -6,6 +6,7 @@ import pymysql
 from datetime import datetime
 from data.connect import WebConnectManager
 from data.driver import Statistic
+from data.driver import CareerStatistic
 from sql.db_connect import DBManager
 from sql.drivers import DriversDBManager
 
@@ -33,6 +34,7 @@ class StatisticsDBManager(DBManager):
                 dict["create_date"] = datetime.now()
 
                 keys = tuple(dict.keys())
+                print(keys)
                 insert_sql = 'insert into season_stats ' + str(keys).replace("'", "") + ' values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
                 
                 # dict 순서 보장이 안되므로, key 값과 value 값 순서 맞추기 위한 values.
@@ -99,8 +101,13 @@ class StatisticsDBManager(DBManager):
         else:
             return []
         
+    def select_season_stats_by_driver(self, name) -> Statistic:
+        # 특정 레이서 시즌 성적 조회
+        result = self._select_connect(f"select name, season_position, season_points, grand_prix_races, grand_prix_points, grand_prix_wins, grand_prix_podiums, grand_prix_poles, grand_prix_top_10s, dhl_fastest_laps, dnfs, sprint_races, sprint_points, sprint_wins, sprint_podiums, sprint_poles, sprint_top_10s from season_stats where name = '{name}'").fetchone()
+        return Statistic(*result)
+        
     def select_career_statistics(self) -> list:
-        # 시즌 성적 전체 조회
+        # 레이서 선수 성적 전체 조회
         result = self._select_connect('select * from career_stats').fetchall()
 
         if result:
@@ -113,3 +120,7 @@ class StatisticsDBManager(DBManager):
         else:
             return []
 
+    def select_career_stats_by_driver(self, name) -> CareerStatistic:
+        # 특정 레이서 성적 조회
+        result = self._select_connect(f"select name, grand_prix_entered, career_points, highest_race_finish, podiums, highest_grid_position, pole_positions, world_championships, dnfs from career_stats where name = '{name}'").fetchone()
+        return CareerStatistic(*result)
