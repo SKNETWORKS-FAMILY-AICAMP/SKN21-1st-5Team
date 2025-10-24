@@ -86,14 +86,14 @@ class StatisticsDBManager(DBManager):
                 insert_sql = """
                             INSERT INTO career_stats_aggr (grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date)
                             select 
-                            avg(nullif(grand_prix_entered, 0))        as grand_prix_entered      
+                            avg(nullif(grand_prix_entered, 0))          as grand_prix_entered      
                             , avg(nullif(career_points, 0))             as career_points           
                             , avg(nullif(highest_race_finish, 0))       as highest_race_finish     
                             , avg(nullif(podiums, 0))                   as podiums                 
                             , avg(nullif(highest_grid_position, 0))     as highest_grid_position   
                             , avg(nullif(pole_positions, 0))            as pole_positions          
                             , avg(nullif(world_championships, 0))       as world_championships     
-                            , null       								as dnfs    
+                            , avg(nullif(dnfs, 0))		                as dnfs    
                             , max(now())                            	as create_date             
                             from career_stats
                            """              
@@ -178,7 +178,7 @@ class StatisticsDBManager(DBManager):
                     # return result
         finally:
             pass
-        
+
     def delete_statistics_all(self):
         self._delete_season_statistics()
         self._delete_career_statistics()
@@ -211,6 +211,34 @@ class StatisticsDBManager(DBManager):
     def select_career_statistics(self) -> list:
         # 레이서 선수 성적 전체 조회
         result = self._select_connect('select * from career_stats').fetchall()
+
+        if result:
+            datas = []
+
+            for r in result:
+                datas.append(r)
+                
+            return datas
+        else:
+            return []
+        
+    def select_season_stats_aggr(self) -> list:
+        # 시즌별성적 집계(평균값)
+        result = self._select_connect('select * from season_stats_aggr').fetchall()
+
+        if result:
+            datas = []
+
+            for r in result:
+                datas.append(r)
+                
+            return datas
+        else:
+            return []
+
+    def selectcareer_stats_aggr(self) -> list:
+        # 통산성적 집계(평균값)
+        result = self._select_connect('select * from career_stats_aggr').fetchall()
 
         if result:
             datas = []
