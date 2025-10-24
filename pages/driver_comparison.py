@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from sql.drivers import DriversDBManager
 from data.driver import DriverData
 from sql.statistics import StatisticsDBManager
@@ -17,7 +18,6 @@ driver_name_list = [d.name for d in driver_list]
 statisticsDB = StatisticsDBManager()
 stats_list = statisticsDB.select_season_statistics()
 career_list = statisticsDB.select_career_statistics()
-
 
 if 'selected_racer1' not in st.session_state:
     st.session_state['selected_racer1'] = None
