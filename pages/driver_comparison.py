@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from sql.drivers import DriversDBManager
 from data.driver import DriverData
 
@@ -17,3 +18,4 @@ for driver in driver_list:
     st.text(d)
     st.image(f"data/flag/{country_file_name}.png", width=25)
     st.image(driver.img)
+
