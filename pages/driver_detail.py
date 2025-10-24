@@ -25,34 +25,49 @@ def card_view(data: DriverData):
             statisticsDB = StatisticsDBManager()
             stats: Statistic = statisticsDB.select_season_stats_by_driver(data.name)
             career: CareerStatistic = statisticsDB.select_career_stats_by_driver(data.name)
+
+            season_avg = statisticsDB.select_season_stats_aggr()
+            career_avg = statisticsDB.select_career_stats_aggr()
             
             sub_col3, sub_col4 = st.columns([1, 1])
             
             with sub_col3:
-                st.subheader("2025")
+                st.subheader("2025 Season")
                 
                 st.metric(
                     label="Season Position",
-                    value=str(stats.season_position),           # 출력할 값
+                    value=str(stats.season_position),
+                    delta=(stats.season_position - season_avg["season_position"])
                 )
 
                 st.metric(
-                    # label=":blue[온도 ]",   # header/title. markdown, 이모지 shortcode, latex($, $$ 로 감싼다.), color text지원.
                     label="Season Points",
-                    value=str(stats.season_points),           # 출력할 값
-                    delta="0"           # metric의 등락 크기값(옵션). `+` 로 시작하거나 생략하면 오름, `-` 로 시작하면 내림.
+                    value=str(stats.season_points),
+                    delta=(stats.season_points - season_avg["season_points"])
+                )
+
+                st.metric(
+                    label="DNFs",
+                    value=str(stats.dnfs),
+                    delta=(stats.dnfs - season_avg["dnfs"])
                 )
             with sub_col4:
                 st.subheader("CAREER STATS")
 
                 st.metric(
                     label="Grand Prix Entered",
-                    value=str(career.grand_prix_entered),           # 출력할 값
+                    value=str(career.grand_prix_entered),
+                    delta=(career.grand_prix_entered - career_avg["grand_prix_entered"])
                 )
 
                 st.metric(
-                    # label=":blue[온도 ]",   # header/title. markdown, 이모지 shortcode, latex($, $$ 로 감싼다.), color text지원.
                     label="Career Points",
-                    value=str(career.career_points),           # 출력할 값
-                    delta="0"           # metric의 등락 크기값(옵션). `+` 로 시작하거나 생략하면 오름, `-` 로 시작하면 내림.
+                    value=str(career.career_points),
+                    delta=(career.career_points - career_avg["career_points"])
+                )
+
+                st.metric(
+                    label="DNFs",
+                    value=str(career.dnfs),
+                    delta=(career.dnfs - career_avg["dnfs"])
                 )

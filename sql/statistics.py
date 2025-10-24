@@ -247,12 +247,12 @@ class StatisticsDBManager(DBManager):
                 from season_stats_aggr
                 """
         result = self._select_connect_dict(insert_sql).fetchone()
-        print(result)
+        return result
 
-    def selectcareer_stats_aggr(self) -> dict:
+    def select_career_stats_aggr(self) -> dict:
         # 통산성적 집계(평균값)
         result = self._select_connect_dict(f"select grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date from career_stats_aggr").fetchone()
-        print(result)
+        return result
 
     def select_career_stats_by_driver(self, name) -> CareerStatistic:
         # 특정 레이서 성적 조회
