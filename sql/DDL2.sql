@@ -3,6 +3,11 @@ USE  1st_pjt;
 -- 재 실행 시 에러발생함
 ALTER TABLE career_stats ADD year INT NULL AFTER name;
 
+-- 사용안함
+DROP TABLE IF EXISTS  country;
+DROP TABLE IF EXISTS  drivers_2;
+DROP TABLE IF EXISTS  team;
+
 DROP TABLE IF EXISTS  season_stats_aggr;
 CREATE TABLE season_stats_aggr (
 	year int PRIMARY key COMMENT '년도',
@@ -40,17 +45,16 @@ CREATE TABLE career_stats_aggr (
 ) COMMENT='통산성적 집계';
 
 -- season_stats 초기데이터
-INSERT INTO season_stats (name,season_position,season_points,grand_prix_races,grand_prix_points,grand_prix_wins,grand_prix_podiums,grand_prix_poles,grand_prix_top_10s,dhl_fastest_laps,dnfs,sprint_races,sprint_points,sprint_wins,sprint_podiums,sprint_poles,sprint_top_10s,create_date) VALUES
-	 ('Alexander Albon',8,73,19,70,0,0,0,11,0,3,4,3,0,0,0,1,'2025-10-24 06:27:32'),
-	 ('Carlos Sainz',5,45,12,85,6,8,9,11,7,3,4,3,8,6,8,3,'2025-10-24 06:27:32'),
-	 ('Charles Leclerc',6,4,8,45,5,9,5,8,9,2,5,8,7,3,5,2,'2025-10-24 06:27:32');
+-- INSERT INTO season_stats (name,season_position,season_points,grand_prix_races,grand_prix_points,grand_prix_wins,grand_prix_podiums,grand_prix_poles,grand_prix_top_10s,dhl_fastest_laps,dnfs,sprint_races,sprint_points,sprint_wins,sprint_podiums,sprint_poles,sprint_top_10s,create_date) VALUES
+-- 	 ('Alexander Albon',8,73,19,70,0,0,0,11,0,3,4,3,0,0,0,1,'2025-10-24 06:27:32'),
+-- 	 ('Carlos Sainz',5,45,12,85,6,8,9,11,7,3,4,3,8,6,8,3,'2025-10-24 06:27:32'),
+-- 	 ('Charles Leclerc',6,4,8,45,5,9,5,8,9,2,5,8,7,3,5,2,'2025-10-24 06:27:32');
 
 -- career_stats 초기데이터
-INSERT INTO career_stats (name,`year`,grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,create_date) VALUES
-	 ('Alexander Albon',2025,7,1366,1,15,1,5,4,'2025-10-24 06:27:32'),
-	 ('Carlos Sainz',2025,117,1367,1,0,1,5,6,'2025-10-24 06:27:32'),
-	 ('Charles Leclercn',2025,17,4366,1,15,1,0,4,'2025-10-24 06:27:32')
-	 ;	 
+-- INSERT INTO career_stats (name,`year`,grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,create_date) VALUES
+-- 	 ('Alexander Albon',2025,7,1366,1,15,1,5,4,'2025-10-24 06:27:32'),
+-- 	 ('Carlos Sainz',2025,117,1367,1,0,1,5,6,'2025-10-24 06:27:32'),
+-- 	 ('Charles Leclercn',2025,17,4366,1,15,1,0,4,'2025-10-24 06:27:32')	 ;	 
 
 -- season_stats 평균값 생성
 INSERT INTO season_stats_aggr (
