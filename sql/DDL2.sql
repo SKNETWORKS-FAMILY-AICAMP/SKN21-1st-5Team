@@ -53,7 +53,26 @@ INSERT INTO career_stats (name,`year`,grand_prix_entered,career_points,highest_r
 	 ;	 
 
 -- season_stats 평균값 생성
-INSERT INTO season_stats_aggr 
+INSERT INTO season_stats_aggr (
+	year
+	, season_position
+	, season_points
+	, grand_prix_races
+	, grand_prix_points
+	, grand_prix_wins
+	, grand_prix_podiums
+	, grand_prix_poles
+	, grand_prix_top_10s
+	, dhl_fastest_laps
+	, dnfs
+	, sprint_races
+	, sprint_points
+	, sprint_wins
+	, sprint_podiums
+	, sprint_poles
+	, sprint_top_10s
+	, create_date	
+)
 select 
 	year(now())								as year 
 	, avg(nullif(season_position, 0))       as season_position	
