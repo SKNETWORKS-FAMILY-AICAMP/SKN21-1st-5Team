@@ -46,10 +46,3 @@ if col3.button('Driver Status Comparison'):
 st.title("About Us")
 st.write("Much like our beloved F1 drivers, Fast F1 Database is a page that is dedicated to bring the fastest and latest update on F1. This includes race updates, scores, player analysis, track analysis and plenty of other F1 related medias and news. Our Database will always strive to provide the most reliable and fastest database related with F1, and we hope to share our love and interest with all the fans of the greatest racing event in the world.")
 
-
-
-
-
-   
-
-
