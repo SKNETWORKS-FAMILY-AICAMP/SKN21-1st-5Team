@@ -77,6 +77,108 @@ class StatisticsDBManager(DBManager):
         finally:
             pass
 
+    def insert_career_stats_aggr(self):
+        try:
+            conn = None
+            cursor = None
+
+            with pymysql.connect(host=self.db_host, port=self.db_port, user=self.user_name, password=self.db_password, db=self.db_name) as conn:
+                insert_sql = """
+                            INSERT INTO career_stats_aggr (grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date)
+                            select 
+                            avg(nullif(grand_prix_entered, 0))          as grand_prix_entered      
+                            , avg(nullif(career_points, 0))             as career_points           
+                            , avg(nullif(highest_race_finish, 0))       as highest_race_finish     
+                            , avg(nullif(podiums, 0))                   as podiums                 
+                            , avg(nullif(highest_grid_position, 0))     as highest_grid_position   
+                            , avg(nullif(pole_positions, 0))            as pole_positions          
+                            , avg(nullif(world_championships, 0))       as world_championships     
+                            , avg(nullif(dnfs, 0))		                as dnfs    
+                            , max(now())                            	as create_date             
+                            from career_stats
+                           """              
+                with conn.cursor() as cursor:
+                        result = cursor.execute(insert_sql)
+                        conn.commit()
+                        print("처리 행수:", result)
+                    # return result
+        finally:
+            pass
+        
+    def merge_season_stats_aggr(self):
+        try:
+            conn = None
+            cursor = None
+
+            with pymysql.connect(host=self.db_host, port=self.db_port, user=self.user_name, password=self.db_password, db=self.db_name) as conn:
+                merge_sql = """
+                           INSERT INTO season_stats_aggr (
+                                year
+                                , season_position
+                                , season_points
+                                , grand_prix_races
+                                , grand_prix_points
+                                , grand_prix_wins
+                                , grand_prix_podiums
+                                , grand_prix_poles
+                                , grand_prix_top_10s
+                                , dhl_fastest_laps
+                                , dnfs
+                                , sprint_races
+                                , sprint_points
+                                , sprint_wins
+                                , sprint_podiums
+                                , sprint_poles
+                                , sprint_top_10s
+                                , create_date	
+                            )
+                            select 
+                                year(now())								as year 
+                                , avg(nullif(season_position, 0))       as season_position	
+                                , avg(nullif(season_points, 0))         as season_points      
+                                , avg(nullif(grand_prix_races, 0))      as grand_prix_races   
+                                , avg(nullif(grand_prix_points, 0))     as grand_prix_points  
+                                , avg(nullif(grand_prix_wins, 0))       as grand_prix_wins    
+                                , avg(nullif(grand_prix_podiums, 0))    as grand_prix_podiums 
+                                , avg(nullif(grand_prix_poles, 0))      as grand_prix_poles   
+                                , avg(nullif(grand_prix_top_10s, 0))    as grand_prix_top_10s 
+                                , avg(nullif(dhl_fastest_laps, 0))      as dhl_fastest_laps   
+                                , avg(nullif(dnfs, 0))                  as dnfs               
+                                , avg(nullif(sprint_races, 0))          as sprint_races       
+                                , avg(nullif(sprint_points, 0))         as sprint_points      
+                                , avg(nullif(sprint_wins, 0))           as sprint_wins        
+                                , avg(nullif(sprint_podiums, 0))        as sprint_podiums     
+                                , avg(nullif(sprint_poles, 0))          as sprint_poles       
+                                , avg(nullif(sprint_top_10s, 0))        as sprint_top_10s     
+                                , max(now())                            as create_date 
+                            from season_stats
+                            ON DUPLICATE KEY UPDATE
+                                season_position		= season_position	
+                                , season_points         = season_points      
+                                , grand_prix_races      = grand_prix_races   
+                                , grand_prix_points     = grand_prix_points  
+                                , grand_prix_wins       = grand_prix_wins    
+                                , grand_prix_podiums    = grand_prix_podiums 
+                                , grand_prix_poles      = grand_prix_poles   
+                                , grand_prix_top_10s    = grand_prix_top_10s 
+                                , dhl_fastest_laps      = dhl_fastest_laps   
+                                , dnfs                  = dnfs               
+                                , sprint_races          = sprint_races       
+                                , sprint_points         = sprint_points      
+                                , sprint_wins           = sprint_wins        
+                                , sprint_podiums        = sprint_podiums     
+                                , sprint_poles          = sprint_poles       
+                                , sprint_top_10s        = sprint_top_10s   
+                                , create_date			= create_date
+                           """              
+                with conn.cursor() as cursor:
+                        result = cursor.execute(merge_sql)
+                        conn.commit()
+                        print("처리 행수:", result)
+                    # return result
+        finally:
+            pass
+
     def delete_statistics_all(self):
         self._delete_season_statistics()
         self._delete_career_statistics()
@@ -119,6 +221,38 @@ class StatisticsDBManager(DBManager):
             return datas
         else:
             return []
+        
+    def select_season_stats_aggr(self) -> dict:
+        # 시즌별성적 집계(평균값)
+        insert_sql = """
+                select
+                    year
+                    , season_position
+                    , season_points
+                    , grand_prix_races
+                    , grand_prix_points
+                    , grand_prix_wins
+                    , grand_prix_podiums
+                    , grand_prix_poles
+                    , grand_prix_top_10s
+                    , dhl_fastest_laps
+                    , dnfs
+                    , sprint_races
+                    , sprint_points
+                    , sprint_wins
+                    , sprint_podiums
+                    , sprint_poles
+                    , sprint_top_10s
+                    , create_date
+                from season_stats_aggr
+                """
+        result = self._select_connect_dict(insert_sql).fetchone()
+        return result
+
+    def select_career_stats_aggr(self) -> dict:
+        # 통산성적 집계(평균값)
+        result = self._select_connect_dict(f"select grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date from career_stats_aggr").fetchone()
+        return result
 
     def select_career_stats_by_driver(self, name) -> CareerStatistic:
         # 특정 레이서 성적 조회

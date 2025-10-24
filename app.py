@@ -27,7 +27,9 @@ def init_data():
    if driversDB.select_drivers() :
       if not statisDB.select_season_statistics():
          statisDB.insert_driver_statistics()
-   
+      else:
+         statisDB.merge_season_stats_aggr()
+         statisDB.insert_career_stats_aggr()  
    else:
       driversDB.insert_driver()
       time.sleep(0.5)
