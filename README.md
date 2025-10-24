@@ -3,7 +3,7 @@
 
 ### ✨ 프로젝트 개요
 
-| 항목 | 내용 |
+| 항목 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 내용 |
 | :--- | :--- |
 | **팀명** | **판타스틱 파이브 (Fantastic Five)** |
 | **주제** | **F1 Racer 데이터 대시보드** |
@@ -14,7 +14,7 @@
 
 ## 1\. 팀원 및 담당 업무
 
-| 이름 | 역할 | 핵심 담당 기술 | 담당 상세 업무 |
+| 이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 역할 | 핵심 담당 기술 | 담당 상세 업무 |
 | :--- | :--- | :--- | :--- |
 | **가람** | **PM (Project Manager)** | SQL, WebCrawling, Streamlit | 프로젝트 총괄 및 관리, 핵심 크롤링 로직 개발 지원, 데이터베이스 레이서 정보 연동. |
 | **병탁** | 팀원 | SQL, Streamlit | 데이터베이스 구조 설계, 데이터베이스 레이서 정보 연동, Streamlit 화면 레이아웃 작업. |
@@ -83,7 +83,7 @@ SKN21-1st-5Team
 
 | 데이터 유형 | 상세 항목 | 크롤링 목적 및 활용 |
 | :--- | :--- | :--- |
-| **Event Schedule** | Drivers, Session status, Career status. | **활용:** 2025년 시즌 레이서 페이지 구성, 향후 비교 분석 시각화. |
+| **Event Schedule** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Drivers, Session status, Career status. | **활용:** 2025년 시즌 레이서 페이지 구성, 향후 비교 분석 시각화. |
 | **Results** | Driver names, Team names, Finishing and Grid positions, Points earned, Finishing status. Session Results. | **활용:** 챔피언십 순위 테이블 및 레이서 결과 제공. |
 | **Timing Data** | Sector times, Lap times, Pit stop duration, Tyre data (compound, age) | **활용:** 상세 분석 페이지에서 레이서/팀별 성능 비교 및 전략 분석 자료로 활용. |
 
@@ -93,9 +93,9 @@ SKN21-1st-5Team
 
 수집 데이터를 효율적으로 저장하고 Streamlit에서 빠르게 조회하기 위해 5개의 테이블을 설계합니다.
 
-![edr](./data/edr.png)
+![erd](./data/edr.png)
 
-| 테이블명 | 역할 | 주요 필드 및 설명 | 연관 관계 |
+| 테이블명 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 역할 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 주요 필드 및 설명 | 연관 관계 |
 | :--- | :--- | :--- | :--- |
 | **`Drivers`** | 레이서의 기본 정보 | `Name` (PK), `Team id`, `Country id`, `Image url` | |
 | **`Career stats`** | 레이서 성적 정보 | `Name` (FK), `Grand prix entered`, `Career points`, `DNFs` |  Drivers (1:N) |
@@ -109,7 +109,7 @@ SKN21-1st-5Team
 
 ### Application 제공하는 기능 설명
 
-| 기능 카테고리 | 상세 기능 및 Streamlit 활용 |
+| 기능 카테고리 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 상세 기능 및 Streamlit 활용 |
 | :--- | :--- |
 | **레이서 정보** | `st.tabs`를 이용해 레이서 순위와 컨스트럭터 순위를 분리하여 제공. 시즌별 \*\*`st.selectbox`\*\*로 데이터 필터링. |
 | **시즌 스케줄** | 예정된 이벤트와 종료된 이벤트를 명확히 구분하여 표시. `st.map`을 활용해 다음 레이스 서킷의 지리적 위치 시각화. |
