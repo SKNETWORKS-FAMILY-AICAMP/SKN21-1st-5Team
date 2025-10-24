@@ -57,77 +57,77 @@ CREATE TABLE career_stats_aggr (
 -- 	 ('Charles Leclercn',2025,17,4366,1,15,1,0,4,'2025-10-24 06:27:32')	 ;	 
 
 -- season_stats 평균값 생성
-INSERT INTO season_stats_aggr (
-	year
-	, season_position
-	, season_points
-	, grand_prix_races
-	, grand_prix_points
-	, grand_prix_wins
-	, grand_prix_podiums
-	, grand_prix_poles
-	, grand_prix_top_10s
-	, dhl_fastest_laps
-	, dnfs
-	, sprint_races
-	, sprint_points
-	, sprint_wins
-	, sprint_podiums
-	, sprint_poles
-	, sprint_top_10s
-	, create_date	
-)
-select 
-	year(now())								as year 
-	, avg(nullif(season_position, 0))       as season_position	
-	, avg(nullif(season_points, 0))         as season_points      
-	, avg(nullif(grand_prix_races, 0))      as grand_prix_races   
-	, avg(nullif(grand_prix_points, 0))     as grand_prix_points  
-	, avg(nullif(grand_prix_wins, 0))       as grand_prix_wins    
-	, avg(nullif(grand_prix_podiums, 0))    as grand_prix_podiums 
-	, avg(nullif(grand_prix_poles, 0))      as grand_prix_poles   
-	, avg(nullif(grand_prix_top_10s, 0))    as grand_prix_top_10s 
-	, avg(nullif(dhl_fastest_laps, 0))      as dhl_fastest_laps   
-	, avg(nullif(dnfs, 0))                  as dnfs               
-	, avg(nullif(sprint_races, 0))          as sprint_races       
-	, avg(nullif(sprint_points, 0))         as sprint_points      
-	, avg(nullif(sprint_wins, 0))           as sprint_wins        
-	, avg(nullif(sprint_podiums, 0))        as sprint_podiums     
-	, avg(nullif(sprint_poles, 0))          as sprint_poles       
-	, avg(nullif(sprint_top_10s, 0))        as sprint_top_10s     
-	, max(now())                            as create_date 
-from season_stats
-ON DUPLICATE KEY UPDATE
-	 season_position		= season_position	
-	, season_points         = season_points      
-	, grand_prix_races      = grand_prix_races   
-	, grand_prix_points     = grand_prix_points  
-	, grand_prix_wins       = grand_prix_wins    
-	, grand_prix_podiums    = grand_prix_podiums 
-	, grand_prix_poles      = grand_prix_poles   
-	, grand_prix_top_10s    = grand_prix_top_10s 
-	, dhl_fastest_laps      = dhl_fastest_laps   
-	, dnfs                  = dnfs               
-	, sprint_races          = sprint_races       
-	, sprint_points         = sprint_points      
-	, sprint_wins           = sprint_wins        
-	, sprint_podiums        = sprint_podiums     
-	, sprint_poles          = sprint_poles       
-	, sprint_top_10s        = sprint_top_10s   
-	, create_date			= create_date
-	;	 
+-- INSERT INTO season_stats_aggr (
+-- 	year
+-- 	, season_position
+-- 	, season_points
+-- 	, grand_prix_races
+-- 	, grand_prix_points
+-- 	, grand_prix_wins
+-- 	, grand_prix_podiums
+-- 	, grand_prix_poles
+-- 	, grand_prix_top_10s
+-- 	, dhl_fastest_laps
+-- 	, dnfs
+-- 	, sprint_races
+-- 	, sprint_points
+-- 	, sprint_wins
+-- 	, sprint_podiums
+-- 	, sprint_poles
+-- 	, sprint_top_10s
+-- 	, create_date	
+-- )
+-- select 
+-- 	year(now())								as year 
+-- 	, avg(nullif(season_position, 0))       as season_position	
+-- 	, avg(nullif(season_points, 0))         as season_points      
+-- 	, avg(nullif(grand_prix_races, 0))      as grand_prix_races   
+-- 	, avg(nullif(grand_prix_points, 0))     as grand_prix_points  
+-- 	, avg(nullif(grand_prix_wins, 0))       as grand_prix_wins    
+-- 	, avg(nullif(grand_prix_podiums, 0))    as grand_prix_podiums 
+-- 	, avg(nullif(grand_prix_poles, 0))      as grand_prix_poles   
+-- 	, avg(nullif(grand_prix_top_10s, 0))    as grand_prix_top_10s 
+-- 	, avg(nullif(dhl_fastest_laps, 0))      as dhl_fastest_laps   
+-- 	, avg(nullif(dnfs, 0))                  as dnfs               
+-- 	, avg(nullif(sprint_races, 0))          as sprint_races       
+-- 	, avg(nullif(sprint_points, 0))         as sprint_points      
+-- 	, avg(nullif(sprint_wins, 0))           as sprint_wins        
+-- 	, avg(nullif(sprint_podiums, 0))        as sprint_podiums     
+-- 	, avg(nullif(sprint_poles, 0))          as sprint_poles       
+-- 	, avg(nullif(sprint_top_10s, 0))        as sprint_top_10s     
+-- 	, max(now())                            as create_date 
+-- from season_stats
+-- ON DUPLICATE KEY UPDATE
+-- 	 season_position		= season_position	
+-- 	, season_points         = season_points      
+-- 	, grand_prix_races      = grand_prix_races   
+-- 	, grand_prix_points     = grand_prix_points  
+-- 	, grand_prix_wins       = grand_prix_wins    
+-- 	, grand_prix_podiums    = grand_prix_podiums 
+-- 	, grand_prix_poles      = grand_prix_poles   
+-- 	, grand_prix_top_10s    = grand_prix_top_10s 
+-- 	, dhl_fastest_laps      = dhl_fastest_laps   
+-- 	, dnfs                  = dnfs               
+-- 	, sprint_races          = sprint_races       
+-- 	, sprint_points         = sprint_points      
+-- 	, sprint_wins           = sprint_wins        
+-- 	, sprint_podiums        = sprint_podiums     
+-- 	, sprint_poles          = sprint_poles       
+-- 	, sprint_top_10s        = sprint_top_10s   
+-- 	, create_date			= create_date
+-- 	;	 
 
 -- career_stats 평균값 생성
-INSERT INTO career_stats_aggr (grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date)
-select 
-  avg(nullif(grand_prix_entered, 0))        as grand_prix_entered      
-, avg(nullif(career_points, 0))             as career_points           
-, avg(nullif(highest_race_finish, 0))       as highest_race_finish     
-, avg(nullif(podiums, 0))                   as podiums                 
-, avg(nullif(highest_grid_position, 0))     as highest_grid_position   
-, avg(nullif(pole_positions, 0))            as pole_positions          
-, avg(nullif(world_championships, 0))       as world_championships     
-, null       								as dnfs    
-, max(now())                            	as create_date             
-from career_stats
-	;	
+-- INSERT INTO career_stats_aggr (grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date)
+-- select 
+--   avg(nullif(grand_prix_entered, 0))        as grand_prix_entered      
+-- , avg(nullif(career_points, 0))             as career_points           
+-- , avg(nullif(highest_race_finish, 0))       as highest_race_finish     
+-- , avg(nullif(podiums, 0))                   as podiums                 
+-- , avg(nullif(highest_grid_position, 0))     as highest_grid_position   
+-- , avg(nullif(pole_positions, 0))            as pole_positions          
+-- , avg(nullif(world_championships, 0))       as world_championships     
+-- , null       								as dnfs    
+-- , max(now())                            	as create_date             
+-- from career_stats
+-- 	;	
