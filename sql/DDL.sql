@@ -5,7 +5,7 @@
  * 날짜: 2025-10-23
  */
 
--- CREATE DATABASE 1st_pjt;
+CREATE DATABASE 1st_pjt;
 USE  1st_pjt;
 
 DROP TABLE IF EXISTS country;
