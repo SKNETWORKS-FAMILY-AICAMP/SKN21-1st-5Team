@@ -23,6 +23,18 @@ class DBManager:
                     return cursor
         finally:
             pass
+    def _select_connect_dict(self, sql):
+        try:
+            conn = None
+            cursor = None
+            
+            with pymysql.connect(host=self.db_host, port=self.db_port, user=self.user_name, password=self.db_password, db=self.db_name) as conn:
+                with conn.cursor(pymysql.cursors.DictCursor) as cursor:  
+                    cursor.execute(sql)
+                    return cursor
+        finally:
+            pass
+            
             
     def _delete_connect(self, sql):
         try:

@@ -5,9 +5,9 @@
 -- CREATE DATABASE 1st_pjt;
 USE  1st_pjt;
 
-DROP TABLE IF EXISTS  country;
 DROP TABLE IF EXISTS  drivers_2;
 DROP TABLE IF EXISTS  team;
+DROP TABLE IF EXISTS  country;
 
 DROP TABLE IF EXISTS  drivers;
 CREATE table drivers (

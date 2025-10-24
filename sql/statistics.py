@@ -222,33 +222,37 @@ class StatisticsDBManager(DBManager):
         else:
             return []
         
-    def select_season_stats_aggr(self) -> list:
+    def select_season_stats_aggr(self) -> dict:
         # 시즌별성적 집계(평균값)
-        result = self._select_connect('select * from season_stats_aggr').fetchall()
+        insert_sql = """
+                select
+                    year
+                    , season_position
+                    , season_points
+                    , grand_prix_races
+                    , grand_prix_points
+                    , grand_prix_wins
+                    , grand_prix_podiums
+                    , grand_prix_poles
+                    , grand_prix_top_10s
+                    , dhl_fastest_laps
+                    , dnfs
+                    , sprint_races
+                    , sprint_points
+                    , sprint_wins
+                    , sprint_podiums
+                    , sprint_poles
+                    , sprint_top_10s
+                    , create_date
+                from season_stats_aggr
+                """
+        result = self._select_connect_dict(insert_sql).fetchone()
+        print(result)
 
-        if result:
-            datas = []
-
-            for r in result:
-                datas.append(r)
-                
-            return datas
-        else:
-            return []
-
-    def selectcareer_stats_aggr(self) -> list:
+    def selectcareer_stats_aggr(self) -> dict:
         # 통산성적 집계(평균값)
-        result = self._select_connect('select * from career_stats_aggr').fetchall()
-
-        if result:
-            datas = []
-
-            for r in result:
-                datas.append(r)
-                
-            return datas
-        else:
-            return []
+        result = self._select_connect_dict(f"select grand_prix_entered,career_points,highest_race_finish,podiums,highest_grid_position,pole_positions,world_championships,dnfs,create_date from career_stats_aggr").fetchone()
+        print(result)
 
     def select_career_stats_by_driver(self, name) -> CareerStatistic:
         # 특정 레이서 성적 조회
